@@ -1,7 +1,7 @@
 {
   "id": "host-folder-manager",
   "name": "Host Folder Manager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create nested host folders and organize them with drag and drop.",
   "author": {
     "name": "Termix community"
@@ -11,14 +11,14 @@
   "icon": "FolderTree",
   "features": [
     "Create folders inside folders",
-    "Move folders and hosts with drag and drop",
+    "Move owned hosts with drag and drop",
     "Keep empty folders visible"
   ],
   "engine": {
     "termix": ">=26.11.2",
     "api": "^2.9"
   },
-  "capabilities": ["ui:surface", "hosts:write"],
+  "capabilities": ["ui:surface", "hosts:write", "network:serve"],
   "env": [],
   "backend": "dist/backend.js",
   "frontend": "dist/frontend.js",

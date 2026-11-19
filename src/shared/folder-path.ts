@@ -52,3 +52,9 @@ export function validFolderName(value: unknown): value is string {
     !/[\u0000-\u001f\u007f]/.test(value)
   );
 }
+
+export function validFolderPath(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  const segments = folderSegments(value);
+  return segments.length > 0 && segments.every(validFolderName);
+}

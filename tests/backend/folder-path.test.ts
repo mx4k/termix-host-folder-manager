@@ -5,6 +5,7 @@ import {
   normalizeFolderPath,
   replaceFolderPrefix,
   validFolderName,
+  validFolderPath,
 } from "../../src/shared/folder-path.js";
 
 describe("folder path helpers", () => {
@@ -35,5 +36,11 @@ describe("folder path helpers", () => {
     expect(validFolderName("Prod/Web")).toBe(false);
     expect(validFolderName("  ")).toBe(false);
     expect(validFolderName("..")).toBe(false);
+  });
+
+  it("accepts only safe non-empty folder paths", () => {
+    expect(validFolderPath("Production / Web")).toBe(true);
+    expect(validFolderPath(" / ")).toBe(false);
+    expect(validFolderPath("Production / ../Web")).toBe(false);
   });
 });

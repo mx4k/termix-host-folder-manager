@@ -5,7 +5,6 @@ Host Folder Manager is a Termix plugin for creating nested host folders and orga
 ## Features
 
 - Create root folders and subfolders from a folder's menu.
-- Drag a folder onto another folder to move it, including its descendant folders and hosts.
 - Drag an owned host into a folder or back to the root.
 - Keep newly created empty folders visible.
 
@@ -21,7 +20,7 @@ npm run build
 npm run pack
 ```
 
-In Termix, open **Plugins → Install from file** and choose the generated `.tmxplug` file. Approve its UI surface and host-write capabilities. Termix still checks the signed-in user's existing host and credential permissions for every folder or host change.
+In Termix, open **Plugins → Install from file** and choose the generated `.tmxplug` file. Approve its UI surface, host-write, and server-route capabilities. Termix still checks the signed-in user's existing host and credential permissions for every folder or host change. The plugin sandbox does not expose a safe folder-rename operation, so folders themselves cannot be dragged between parents.
 
 ## Development
 

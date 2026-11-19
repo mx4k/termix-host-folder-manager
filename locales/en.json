@@ -14,7 +14,7 @@
   },
   "ui": {
     "title": "Host folders",
-    "description": "Create subfolders or drag folders and hosts to organize them.",
+    "description": "Create subfolders or drag owned hosts to organize them.",
     "createRoot": "New folder",
     "createChild": "Add subfolder",
     "folderName": "Folder name",

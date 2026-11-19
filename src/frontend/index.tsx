@@ -10,22 +10,17 @@ import {
 import {
   useHosts,
   usePermission,
+  usePluginApi,
   useShell,
   useTranslation,
   type PluginHostRecord,
   type TermixApp,
 } from "@termix-ssh/plugin-sdk/frontend";
 import { LoadingState, PanelShell } from "@termix-ssh/plugin-sdk/ui";
-import {
-  bulkUpdateSSHHosts,
-  getSSHFolders,
-  renameFolder,
-  updateFolderMetadata,
-} from "@termix-ssh/plugin-sdk/ui";
+import { getSSHFolders } from "@termix-ssh/plugin-sdk/ui";
 import {
   folderAncestors,
   folderSegments,
-  isFolderInside,
   normalizeFolderPath,
   validFolderName,
 } from "../shared/folder-path.js";
@@ -38,9 +33,7 @@ type FolderNode = {
   hosts: PluginHostRecord[];
 };
 
-type DragItem =
-  | { kind: "folder"; path: string }
-  | { kind: "host"; hostId: string };
+type DragItem = { kind: "host"; hostId: string };
 
 function buildFolderTree(
   paths: string[],
@@ -82,17 +75,11 @@ function buildFolderTree(
   return root;
 }
 
-function containsSharedHost(folder: FolderNode): boolean {
-  return (
-    folder.hosts.some((host) => host.isShared) ||
-    folder.folders.some(containsSharedHost)
-  );
-}
-
 function FolderManagerTab() {
   const { t } = useTranslation();
   const { hosts, loaded } = useHosts();
   const canManage = usePermission("manage");
+  const pluginApi = usePluginApi();
   const shell = useShell();
   const [paths, setPaths] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -141,53 +128,33 @@ function FolderManagerTab() {
     }
     setError("");
     try {
-      await updateFolderMetadata(path);
+      await pluginApi.put("/folders", { path });
       setFolderName("");
       setCreating(null);
       if (parentPath) {
         setExpanded((current) => new Set(current).add(parentPath));
       }
       await reload();
-    } catch {
-      setError(t("ui.saveError"));
+    } catch (error) {
+      setError(error instanceof Error ? error.message : t("ui.saveError"));
     }
   };
 
   const moveItem = async (item: DragItem, parentPath: string | null) => {
     setError("");
     try {
-      if (item.kind === "folder") {
-        const name = folderSegments(item.path).at(-1) ?? "";
-        const newPath = [parentPath, name].filter(Boolean).join(" / ");
-        if (newPath === item.path) return;
-        if (parentPath && isFolderInside(parentPath, item.path)) {
-          setError(t("ui.moveIntoSelf"));
-          return;
-        }
-        if (
-          paths.some(
-            (path) =>
-              isFolderInside(path, newPath) && !isFolderInside(path, item.path),
-          )
-        ) {
-          setError(t("ui.folderExists"));
-          return;
-        }
-        await renameFolder(item.path, newPath);
-      } else {
-        const hostId = Number(item.hostId);
-        if (!Number.isSafeInteger(hostId)) throw new Error("Invalid host id");
-        const result = await bulkUpdateSSHHosts([hostId], {
-          folder: parentPath,
-        });
-        if (result.failed > 0 || result.updated === 0) {
-          throw new Error(result.errors[0] ?? t("ui.moveFailed"));
-        }
+      const hostId = Number(item.hostId);
+      if (!Number.isSafeInteger(hostId) || hostId <= 0) {
+        throw new Error("Invalid host ID");
       }
+      await pluginApi.patch("/hosts/folder", {
+        hostId,
+        folder: parentPath,
+      });
       await shell?.hosts.reload();
       await reload();
-    } catch {
-      setError(t("ui.moveFailed"));
+    } catch (error) {
+      setError(error instanceof Error ? error.message : t("ui.moveFailed"));
     }
   };
 
@@ -205,10 +172,7 @@ function FolderManagerTab() {
     if (!raw) return;
     try {
       const item = JSON.parse(raw) as DragItem;
-      if (
-        (item.kind === "folder" && typeof item.path === "string") ||
-        (item.kind === "host" && typeof item.hostId === "string")
-      ) {
+      if (item.kind === "host" && typeof item.hostId === "string") {
         void moveItem(item, parentPath);
       }
     } catch {
@@ -219,7 +183,6 @@ function FolderManagerTab() {
   const renderFolders = (folders: FolderNode[]) =>
     folders.map((folder) => {
       const isExpanded = expanded.has(folder.path);
-      const movable = canManage && !containsSharedHost(folder);
       return (
         <section
           className="hfm-folder"
@@ -227,13 +190,7 @@ function FolderManagerTab() {
           onDragOver={(event) => event.preventDefault()}
           onDrop={(event) => dropItem(event, folder.path)}
         >
-          <div
-            className="hfm-folder-row"
-            draggable={movable}
-            onDragStart={(event) =>
-              movable && beginDrag(event, { kind: "folder", path: folder.path })
-            }
-          >
+          <div className="hfm-folder-row">
             <button
               className="hfm-expand"
               onClick={() =>

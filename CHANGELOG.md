@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3
+
+### Fixed
+
+- Perform folder creation and host moves through authenticated plugin backend routes, as required by the web plugin sandbox.
+- Stop offering folder-to-folder drag because the supported SDK has no safe folder-rename operation.
+
 ## 1.0.2
 
 ### Fixed
