@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Fixed
+
+- Request the host-write capability required to create folders and move hosts.
+
 ## 1.0.1
 
 ### Fixed

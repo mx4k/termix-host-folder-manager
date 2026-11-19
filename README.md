@@ -21,7 +21,7 @@ npm run build
 npm run pack
 ```
 
-In Termix, open **Plugins → Install from file** and choose the generated `.tmxplug` file. The plugin needs approval to add a UI tab. Termix still checks the signed-in user's existing host and credential permissions for every folder or host change.
+In Termix, open **Plugins → Install from file** and choose the generated `.tmxplug` file. Approve its UI surface and host-write capabilities. Termix still checks the signed-in user's existing host and credential permissions for every folder or host change.
 
 ## Development
 
