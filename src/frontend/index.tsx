@@ -284,7 +284,15 @@ function FolderManagerTab() {
                     aria-label={t("ui.folderName")}
                     placeholder={t("ui.folderName")}
                   />
-                  <button type="submit">{t("ui.create")}</button>
+                  <button
+                    type="submit"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      void createFolder(folder.path);
+                    }}
+                  >
+                    {t("ui.create")}
+                  </button>
                   <button type="button" onClick={() => setCreating(null)}>
                     {t("ui.cancel")}
                   </button>
@@ -357,7 +365,15 @@ function FolderManagerTab() {
               aria-label={t("ui.folderName")}
               placeholder={t("ui.folderName")}
             />
-            <button type="submit">{t("ui.create")}</button>
+            <button
+              type="submit"
+              onClick={(event) => {
+                event.preventDefault();
+                void createFolder(null);
+              }}
+            >
+              {t("ui.create")}
+            </button>
             <button type="button" onClick={() => setCreating(null)}>
               {t("ui.cancel")}
             </button>
