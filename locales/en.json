@@ -1,0 +1,39 @@
+{
+  "tab": {
+    "title": "Host folders"
+  },
+  "permissions": {
+    "use": {
+      "title": "View host folders",
+      "description": "View the host folder hierarchy."
+    },
+    "manage": {
+      "title": "Organize host folders",
+      "description": "Create folders and move folders or hosts."
+    }
+  },
+  "ui": {
+    "title": "Host folders",
+    "description": "Create subfolders or drag folders and hosts to organize them.",
+    "createRoot": "New folder",
+    "createChild": "Add subfolder",
+    "folderName": "Folder name",
+    "folderExists": "A folder with that path already exists.",
+    "create": "Create",
+    "cancel": "Cancel",
+    "root": "Unfiled hosts",
+    "empty": "No folders yet. Create one to get started.",
+    "emptyFolder": "Empty folder",
+    "loading": "Loading folders…",
+    "loadError": "Could not load folders.",
+    "saveError": "Could not save this folder change.",
+    "invalidName": "Enter a folder name without a slash.",
+    "moveFailed": "Could not move the selected item.",
+    "moveIntoSelf": "A folder cannot be moved into itself or one of its subfolders.",
+    "sharedHost": "Shared host (read only)",
+    "collapse": "Collapse folder",
+    "expand": "Expand folder",
+    "dropHere": "Drop here to move into this folder",
+    "moveToRoot": "Drop here to move to the root"
+  }
+}

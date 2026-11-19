@@ -1,0 +1,6 @@
+node_modules/
+dist/
+coverage/
+*.tmxplug
+*.tmxplug.sig
+termix-plugin-signing.key

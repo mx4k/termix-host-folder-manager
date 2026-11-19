@@ -1,0 +1,124 @@
+.hfm {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  color: var(--foreground);
+}
+
+.hfm-description,
+.hfm-muted,
+.hfm-empty-folder {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.hfm-toolbar,
+.hfm-create,
+.hfm-folder-row,
+.hfm-host {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hfm-toolbar {
+  justify-content: space-between;
+}
+
+.hfm button,
+.hfm input {
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background: var(--background);
+  color: inherit;
+  padding: 0.35rem 0.55rem;
+}
+
+.hfm button {
+  cursor: pointer;
+}
+
+.hfm-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hfm-create input {
+  min-width: 10rem;
+}
+
+.hfm-tree,
+.hfm-folder,
+.hfm-children {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.hfm-children {
+  margin-left: 1.25rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--border);
+}
+
+.hfm-folder-row,
+.hfm-host {
+  min-height: 2rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.375rem;
+}
+
+.hfm-folder-row:hover,
+.hfm-host:hover {
+  background: var(--muted);
+}
+
+.hfm-folder-row[draggable="true"],
+.hfm-host[draggable="true"] {
+  cursor: grab;
+}
+
+.hfm-folder-name,
+.hfm-host span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hfm-folder-name {
+  flex: 1;
+}
+
+.hfm-icon,
+.hfm-expand svg,
+.hfm-add svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.hfm-expand,
+.hfm-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem !important;
+}
+
+.hfm-readonly {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hfm-root-drop {
+  border: 1px dashed var(--border);
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+.hfm-error {
+  color: var(--destructive);
+  font-size: 0.875rem;
+}

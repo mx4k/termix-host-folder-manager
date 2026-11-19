@@ -1,0 +1,8 @@
+{
+  "extends": "./node_modules/@termix-ssh/plugin-sdk/tsconfig.plugin.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts"]
+}
